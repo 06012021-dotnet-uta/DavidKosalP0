@@ -71,7 +71,7 @@ namespace RockPaperScissors1
             else if (playerChoiceInt == computerChoice)
             {
                 
-
+                Console.WriteLine("Tie game");
             }
             else {
                 playerWin++;
