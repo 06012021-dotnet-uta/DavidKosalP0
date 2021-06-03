@@ -11,11 +11,16 @@ namespace RockPaperScissors1
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Rock-Paper-Scissors!\n\nPlease make a choice");
+            int count = 0;
+            
+            Console.WriteLine("Welcome to Rock-Paper-Scissors!\n\nEnter your name: ");
+            string playerName = Console.ReadLine();
+            Console.WriteLine($"\nHello, {playerName}, please make your choice");
+
             bool successfulConversion = false;
             int playerChoiceInt;
 
-
+            while(count < 4){
             do{
             Console.WriteLine("1. Rock\n2. Paper\n3. Scissors");
             string playerChoice = Console.ReadLine();
@@ -35,7 +40,7 @@ namespace RockPaperScissors1
             } while(!successfulConversion || (playerChoiceInt < 1 || playerChoiceInt > 3));
 
             
-
+            count++;
             if(successfulConversion == true){
                 Console.WriteLine($"The conversion returned {successfulConversion} and the player chose {playerChoiceInt}");
             }
@@ -53,9 +58,9 @@ namespace RockPaperScissors1
             Console.WriteLine($"The computer's choice is {computerChoice}");
 
             //check who won
-            if (playerChoiceInt == 1 && computerChoice == 2 ||
+            if (count == 3 && (playerChoiceInt == 1 && computerChoice == 2 ||
             playerChoiceInt == 2 && computerChoice == 3 ||
-            playerChoiceInt == 3 && computerChoice == 1)
+            playerChoiceInt == 3 && computerChoice == 1))
             {
                 Console.WriteLine("The computer wins");
 
@@ -66,11 +71,11 @@ namespace RockPaperScissors1
 
             }
             else {
-                Console.WriteLine("Player Wins");
+                Console.WriteLine($"{playerName} Wins");
             }
             
 
-
+            }
 
         }
     }
