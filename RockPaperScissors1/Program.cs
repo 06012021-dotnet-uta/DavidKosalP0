@@ -12,6 +12,8 @@ namespace RockPaperScissors1
         static void Main(string[] args)
         {
             int count = 0;
+            int playerWin = 0;
+            int computerWin = 0;
             
             Console.WriteLine("Welcome to Rock-Paper-Scissors!\n\nEnter your name: ");
             string playerName = Console.ReadLine();
@@ -20,9 +22,9 @@ namespace RockPaperScissors1
             bool successfulConversion = false;
             int playerChoiceInt;
 
-            while(count < 4){
+            while(count < 3){
             do{
-            Console.WriteLine("1. Rock\n2. Paper\n3. Scissors");
+            Console.WriteLine("1. Rock\n2. Paper\n3. Scissors\n");
             string playerChoice = Console.ReadLine();
 
             //create a int variable to catch the converted choice
@@ -40,13 +42,12 @@ namespace RockPaperScissors1
             } while(!successfulConversion || (playerChoiceInt < 1 || playerChoiceInt > 3));
 
             
-            count++;
             if(successfulConversion == true){
-                Console.WriteLine($"The conversion returned {successfulConversion} and the player chose {playerChoiceInt}");
+                Console.WriteLine($"The conversion returned {successfulConversion} and the player chose {playerChoiceInt}\n");
             }
             else
             {
-                Console.WriteLine($"The conversion returned {successfulConversion}");
+                Console.WriteLine($"The conversion returned {successfulConversion}\n");
             }
 
             //get a random number generator object
@@ -58,23 +59,32 @@ namespace RockPaperScissors1
             Console.WriteLine($"The computer's choice is {computerChoice}");
 
             //check who won
-            if (count == 3 && (playerChoiceInt == 1 && computerChoice == 2 ||
+            if (playerChoiceInt == 1 && computerChoice == 2 ||
             playerChoiceInt == 2 && computerChoice == 3 ||
-            playerChoiceInt == 3 && computerChoice == 1))
+            playerChoiceInt == 3 && computerChoice == 1)
             {
-                Console.WriteLine("The computer wins");
+                computerWin++;
+                Console.WriteLine($"\n{playerName}'s score is {playerWin} and the computer's score is {computerWin}");
+                count++;
 
             }
             else if (playerChoiceInt == computerChoice)
             {
-                Console.WriteLine("Tie Game");
+                
 
             }
             else {
-                Console.WriteLine($"{playerName} Wins");
+                playerWin++;
+                Console.WriteLine($"\n{playerName}'s score is {playerWin} and the computer's score is {computerWin}");
+                count++;
             }
             
-
+            if(count == 3 && playerWin > computerWin){
+                Console.WriteLine($"\n{playerName} wins");
+            }
+            else if(count == 3 && computerWin > playerWin){
+                Console.WriteLine("\nThe computer wins");
+            }
             }
 
         }
