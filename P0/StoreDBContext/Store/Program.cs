@@ -37,10 +37,18 @@ namespace Store
             cart.addToCart(productChoice, quantityChoice);
 
             Console.WriteLine("\n");
+            locationName.decrement(quantityChoice);
+
+            Console.WriteLine("\n");
             cart.viewCart();
 
             Console.WriteLine("\n");
             cart.totalCost();
+
+            Console.WriteLine("\n");
+            cart.displayOrderHistory();
+
+
 
 
         }

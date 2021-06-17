@@ -18,6 +18,7 @@ namespace StoreDBContext
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<StoreOrder> StoreOrders { get; set; }
@@ -50,6 +51,27 @@ namespace StoreDBContext
                     .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Inventory>(entity =>
+            {
+                entity.ToTable("Inventory");
+
+                entity.Property(e => e.InventoryId).HasColumnName("InventoryID");
+
+                entity.Property(e => e.LocationId).HasColumnName("LocationID");
+
+                entity.Property(e => e.PoductId).HasColumnName("PoductID");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Inventories)
+                    .HasForeignKey(d => d.LocationId)
+                    .HasConstraintName("FK__Inventory__Locat__300424B4");
+
+                entity.HasOne(d => d.Poduct)
+                    .WithMany(p => p.Inventories)
+                    .HasForeignKey(d => d.PoductId)
+                    .HasConstraintName("FK__Inventory__Poduc__2F10007B");
             });
 
             modelBuilder.Entity<Location>(entity =>

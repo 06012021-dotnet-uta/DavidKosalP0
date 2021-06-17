@@ -9,6 +9,7 @@ namespace StoreDBContext
     {
         public Product()
         {
+            Inventories = new HashSet<Inventory>();
             StoreOrders = new HashSet<StoreOrder>();
         }
 
@@ -17,6 +18,7 @@ namespace StoreDBContext
         public int ProductPrice { get; set; }
         public string ProductDescription { get; set; }
 
+        public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual ICollection<StoreOrder> StoreOrders { get; set; }
     }
 }

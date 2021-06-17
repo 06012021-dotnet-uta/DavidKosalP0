@@ -11,6 +11,7 @@ namespace Store
     {
         private StoreContext context = new StoreContext();
         private Dictionary<String, String> account = new Dictionary<String, String>();
+        private string choices;
         private string customerID;
         private string firstName;
         private string lastName;
@@ -29,7 +30,7 @@ namespace Store
 
             //Asks the user for CustomerID and tries to match
             //first and last name with it
-            Console.WriteLine("What is your Customer ID?\n");
+            /*Console.WriteLine("What is your Customer ID?\n");
             customerID = Console.ReadLine();
             int customerIDInt = Convert.ToInt32(customerID);
 
@@ -40,9 +41,16 @@ namespace Store
                     firstName = match.FirstName;
                     lastName = match.LastName;
                 }
-            }
+            }*/
 
-            Console.WriteLine($"\nCongratulations {firstName} {lastName} on creating your account\n");
+            /*Console.WriteLine("Do you want to log in or register? \n1. Login\n 2. Register");
+            choices = Console.ReadLine();*/
+
+            Console.WriteLine($"Please enter your first name: \n");
+            firstName = Console.ReadLine();
+
+            Console.WriteLine($"Please enter your last name: \n");
+            lastName = Console.ReadLine();
 
             //Asks the user to create a username and password and saves it in a dictionary
             Console.WriteLine("\nEnter your username\n");
@@ -52,6 +60,14 @@ namespace Store
             password = Console.ReadLine();
 
             account.Add(username, password);
+
+            Customer c = new Customer();
+            c.FirstName = firstName;
+            c.LastName = lastName;
+
+            context.Customers.Update(c);
+            context.SaveChanges();
+
 
         }
 
