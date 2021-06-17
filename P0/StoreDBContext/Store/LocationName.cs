@@ -32,15 +32,15 @@ namespace Store
         public void decrement(int quantity)
         {
             Inventory inventory = new Inventory();
-            inventory.InventoryId = 1;
+            inventory.NumberProducts = 1;
             /*locationID = (int)inventory.LocationId;
             q = (int)inventory.Quantity;*/
 
 
             using(context)
             {
-                var inven = context.Inventories.FirstOrDefault(a => a.InventoryId == 1);
-                inven.Quantity = inven.Quantity - quantity;
+                var inven = context.Inventories.FirstOrDefault(a => a.NumberProducts == 1);
+                inven.NumberProducts = inven.NumberProducts - quantity;
                 //context.Inventories.Update(inven);
                 context.SaveChanges();
             }

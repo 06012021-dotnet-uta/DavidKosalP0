@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace StoreDBContext
 {
-    public partial class Inventory
+    public partial class OrderDetail
     {
         public int ProductId { get; set; }
-        public int LocationId { get; set; }
-        public int NumberProducts { get; set; }
+        public int OrderId { get; set; }
+        public int? Quantity { get; set; }
 
-        public virtual Location Location { get; set; }
+        public virtual StoreOrder Order { get; set; }
         public virtual Product Product { get; set; }
     }
 }
