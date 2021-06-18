@@ -19,6 +19,8 @@ namespace Store
         /// </summary>
         public void getStoreName()
         {
+            Console.WriteLine("Please choose a location from this list");
+
             var names = context.Locations.ToList();
             foreach(StoreDBContext.Location s in names)
             {

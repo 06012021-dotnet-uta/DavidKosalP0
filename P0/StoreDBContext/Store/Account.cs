@@ -19,24 +19,28 @@ namespace Store
         private string passwordCreate;
 
 
-        public void accountOptions()
+        public void menuOptions()
         {
-
-                Console.WriteLine("Please Choose an Number for an Option\n");
-                Console.WriteLine("1.Sign in\n2.Register\n3.Exit\n");
-                signInChoice = Convert.ToInt32(Console.ReadLine());
-
+            Console.WriteLine("Please Choose an Number for an Option\n");
+            Console.WriteLine("1.Sign in\n2.Register\n3.Exit\n");
+            signInChoice = Convert.ToInt32(Console.ReadLine());
+           
                 if (signInChoice == 1)
-            {
-                signIn();
-            }
-            
+                {
+                    signIn();
+                }
+
                 if (signInChoice == 2)
                 {
                     createAccount();
+                    menuOptions();
                 }
+            else
+            {
+                Console.WriteLine("Not a Valid Choice. Please choose a number\n");
+                menuOptions();
+            }
             
-
         }
 
         public void signIn()
@@ -114,6 +118,8 @@ namespace Store
 
             context.Customers.Update(c);
             context.SaveChanges();
+
+            Console.WriteLine("Your account has been created\n");
 
 
         }

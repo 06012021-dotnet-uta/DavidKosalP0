@@ -17,7 +17,7 @@ namespace Store
             int quantityChoice;
 
             Console.WriteLine("Welcome to Best Buy! Please make an account\n");
-            account.accountOptions();
+            account.menuOptions();
             /*account.createAccount();*/
 
             /*Console.WriteLine("\nPlease Choose a Location\n");
