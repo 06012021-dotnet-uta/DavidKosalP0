@@ -19,28 +19,37 @@ namespace Store
         private string passwordCreate;
 
 
-        public void menuOptions()
+        public bool menuOptions()
         {
+            bool loggedIn = false;
+
             Console.WriteLine("Please Choose an Number for an Option\n");
             Console.WriteLine("1.Sign in\n2.Register\n3.Exit\n");
             signInChoice = Convert.ToInt32(Console.ReadLine());
-           
-                if (signInChoice == 1)
-                {
-                    signIn();
-                }
 
-                if (signInChoice == 2)
-                {
-                    createAccount();
-                    menuOptions();
-                }
+            if (signInChoice == 1)
+            {
+                signIn();
+
+            }
+
+            else if (signInChoice == 2)
+            {
+                createAccount();
+                menuOptions();
+            }
+            else if (signInChoice == 3)
+            {
+                loggedIn = true;
+            }
             else
             {
                 Console.WriteLine("Not a Valid Choice. Please choose a number\n");
                 menuOptions();
             }
-            
+
+            return loggedIn;
+
         }
 
         public void signIn()
@@ -48,12 +57,12 @@ namespace Store
             StoreDBContext.Customer userNameAttempt;
             StoreDBContext.Customer passwordAttempt;
 
-            
-                Console.WriteLine("Enter your username:\n");
-                usernameSignIn = Console.ReadLine();
 
-                userNameAttempt = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
-            
+            Console.WriteLine("Enter your username:\n");
+            usernameSignIn = Console.ReadLine();
+
+            userNameAttempt = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
+
             while (userNameAttempt == null)
             {
                 Console.WriteLine("\nUsername was not found. Please try again\n");
@@ -62,12 +71,12 @@ namespace Store
                 userNameAttempt = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
             }
 
-            
-                Console.WriteLine("Enter your password:\n");
-                passwordSignIn = Console.ReadLine();
 
-                passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();
-            
+            Console.WriteLine("Enter your password:\n");
+            passwordSignIn = Console.ReadLine();
+
+            passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();
+
             while (passwordAttempt == null)
             {
                 Console.WriteLine("\nPassword was not found. Please try again\n");
@@ -75,8 +84,6 @@ namespace Store
                 passwordSignIn = Console.ReadLine();
                 passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();
             }
-
-
 
 
         }

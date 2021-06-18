@@ -10,6 +10,7 @@ namespace Store
     class LocationName : Location
     {
         private StoreContext context = new StoreContext();
+        string locationChoice;
         int locationID;
         int q;
         /// <summary>
@@ -17,9 +18,12 @@ namespace Store
         /// Instantiates a list of locations from the location database and prints out the results
         /// 
         /// </summary>
-        public void getStoreName()
+        public string getStoreName()
         {
-            Console.WriteLine("Please choose a location from this list");
+            StoreDBContext.Location currentLocation;
+
+
+            Console.WriteLine("\nPlease choose a location from this list\n");
 
             var names = context.Locations.ToList();
             foreach(StoreDBContext.Location s in names)
@@ -27,8 +31,43 @@ namespace Store
                 string name = s.LocationName;
                 Console.WriteLine(name);
             }
-            
 
+            Console.WriteLine("\n");
+            locationChoice = Console.ReadLine();
+            currentLocation = context.Locations.Where(x => x.LocationName == locationChoice).FirstOrDefault();
+
+            while (currentLocation == null)
+            {
+                Console.WriteLine("\nLocation was not found. Please try again\n");
+                getStoreName();
+            }
+
+            string location = currentLocation.ToString();
+
+            return location;
+
+
+        }
+
+        public void listProducts()
+        {
+            Console.WriteLine("Here are the available products:\n");
+
+            var joinResults = context.Inventories.Join(
+                context.Products,
+                invent => invent.ProductId,
+                prod => prod.ProductId,
+                (invent, prod) => new
+                {
+                    ProductId = prod.ProductId,
+                    ProductName = prod.ProductName,
+                    ProductLocationID = invent.LocationId,
+                    ProductAmount = invent.NumberProducts,
+                    ProductDesc = prod.ProductDescription,
+                    ProductPrice = prod.ProductPrice
+                }
+            );/*
+            var productList = joinResults.Where(x => x.ProductLocationID == user.currentLocation.LocationId).ToList();*/
         }
 
         public void decrement(int quantity)
