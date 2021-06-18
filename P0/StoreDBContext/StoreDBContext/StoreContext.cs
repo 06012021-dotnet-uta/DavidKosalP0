@@ -18,7 +18,9 @@ namespace StoreDBContext
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<StoreOrder> StoreOrders { get; set; }
 
@@ -50,6 +52,48 @@ namespace StoreDBContext
                     .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Inventory>(entity =>
+            {
+                entity.HasKey(e => new { e.ProductId, e.LocationId })
+                    .HasName("PK_inventory");
+
+                entity.ToTable("Inventory");
+
+                entity.HasIndex(e => e.ProductId, "fkIdx_3");
+
+                entity.HasIndex(e => e.LocationId, "fkIdx_4");
+
+                entity.HasIndex(e => e.ProductId, "fkIdx_43");
+
+                entity.HasIndex(e => e.LocationId, "fkIdx_46");
+
+                entity.HasIndex(e => e.ProductId, "fkIdx_50");
+
+                entity.HasIndex(e => e.ProductId, "fkIdx_55");
+
+                entity.HasIndex(e => e.LocationId, "fkIdx_60");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Inventories)
+                    .HasForeignKey(d => d.LocationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_45");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Inventories)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_42");
             });
 
             modelBuilder.Entity<Location>(entity =>
@@ -61,6 +105,28 @@ namespace StoreDBContext
                 entity.Property(e => e.LocationName)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<OrderDetail>(entity =>
+            {
+                entity.HasKey(e => new { e.ProductId, e.OrderId })
+                    .HasName("PK_orderDetails");
+
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_2");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_1");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -95,8 +161,6 @@ namespace StoreDBContext
 
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.StoreOrders)
                     .HasForeignKey(d => d.CustomerId)
@@ -106,11 +170,6 @@ namespace StoreDBContext
                     .WithMany(p => p.StoreOrders)
                     .HasForeignKey(d => d.LocationId)
                     .HasConstraintName("FK__StoreOrde__Locat__2B3F6F97");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.StoreOrders)
-                    .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__StoreOrde__Produ__2C3393D0");
             });
 
             OnModelCreatingPartial(modelBuilder);

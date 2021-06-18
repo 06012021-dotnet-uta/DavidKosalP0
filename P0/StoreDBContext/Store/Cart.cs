@@ -69,5 +69,19 @@ namespace Store
             Console.WriteLine($"\nThe total cost of your cart is ${sum}");
         }
 
+        /// <summary>
+        /// 
+        /// Displays the user's order history
+        /// 
+        /// </summary>
+        public void displayOrderHistory()
+        {
+            Console.WriteLine("\nHere is your Order History: \n");
+            foreach (KeyValuePair<String, int> s in cart)
+            {
+                Console.WriteLine("{1} {0}", s.Key, s.Value);
+            }
+        }
+
     }
 }

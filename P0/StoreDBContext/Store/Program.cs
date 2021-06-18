@@ -17,9 +17,10 @@ namespace Store
             int quantityChoice;
 
             Console.WriteLine("Welcome to Best Buy! Please make an account\n");
-            account.createAccount();
+            account.menuOptions();
+            /*account.createAccount();*/
 
-            Console.WriteLine("\nPlease Choose a Location\n");
+            /*Console.WriteLine("\nPlease Choose a Location\n");
             locationName.getStoreName();
 
             Console.WriteLine("\n");
@@ -37,10 +38,18 @@ namespace Store
             cart.addToCart(productChoice, quantityChoice);
 
             Console.WriteLine("\n");
+            locationName.decrement(quantityChoice);
+
+            Console.WriteLine("\n");
             cart.viewCart();
 
             Console.WriteLine("\n");
             cart.totalCost();
+
+            Console.WriteLine("\n");
+            cart.displayOrderHistory();*/
+
+
 
 
         }
