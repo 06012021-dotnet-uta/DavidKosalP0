@@ -22,7 +22,15 @@ namespace Store
         /// <param name="quantity">How much of the product is in the cart</param>
         public void addToCart(Product product, int quantity)
         {
-            cart.Add(product, quantity);
+            if (!cart.ContainsKey(product))
+            {
+                cart.Add(product, quantity);
+            }
+            else
+            {
+                cart[product] += quantity;
+            }
+           
             
         }
 
@@ -45,33 +53,29 @@ namespace Store
 
         }
 
+        public Product getProduct(Product product)
+        {
+            Product prod = new Product();
+            foreach(Product p in cart.Keys)
+            {
+                if (cart.Keys.Contains(p))
+                {
+                    prod = p;
+                    return prod;
+                }
+            }
+            return prod;
+
+        }
+
         /// <summary>
         /// 
-        /// Finds the total cost of the cart and prints it
+        /// Clears the cart
         /// 
         /// </summary>
-        public void totalCost()
+        public void clearCart()
         {
-            int sum = 0;
-
-            //Instantiates a list of products from the products database
-            var names = context.Products.ToList();
-            foreach (StoreDBContext.Product s in names)
-            {
-                string name = s.ProductName;
-                int price = s.ProductPrice;
-                productPrices.Add(name, price);
-            }
-
-            //Finds the price of the products and adds the total
-            /*foreach (KeyValuePair<string,int> product in cart)
-            {
-                int findPrice = productPrices[product.Key];
-                int quantityTotal = findPrice * product.Value;
-                sum = sum + quantityTotal;
-
-            }*/
-            Console.WriteLine($"\nThe total cost of your cart is ${sum}");
+            cart.Clear();
         }
 
         /// <summary>
@@ -81,11 +85,22 @@ namespace Store
         /// </summary>
         public void displayOrderHistory()
         {
-            Console.WriteLine("\nHere is your Order History: \n");
-            /*foreach (KeyValuePair<String, int> s in cart)
-            {
-                Console.WriteLine("{1} {0}", s.Key, s.Value);
-            }*/
+            var orderFull = (
+                from details in context.OrderDetails
+                join order in context.StoreOrders
+                on details.OrderId equals order.OrderId
+                select new
+                {
+                    OrderId = details.OrderId,
+                    ProductID = details.ProductId,
+                    Quantity = details.Quantity,
+                    Time = order.OrderTime,
+                    CustomerID = order.CustomerId,
+                    LocationID = order.LocationId
+                }
+                );
+
+
         }
 
     }
