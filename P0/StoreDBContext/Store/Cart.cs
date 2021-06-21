@@ -10,7 +10,7 @@ namespace Store
     class Cart
     {
         private StoreContext context = new StoreContext();
-        private Dictionary<String,int> cart = new Dictionary<String, int>();
+        private Dictionary<Product,int> cart = new Dictionary<Product, int>();
         private Dictionary<String, int> productPrices = new Dictionary<String, int>();
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Store
         /// </summary>
         /// <param name="product">The name of the product</param>
         /// <param name="quantity">How much of the product is in the cart</param>
-        public void addToCart(string product, int quantity)
+        public void addToCart(Product product, int quantity)
         {
             cart.Add(product, quantity);
             
@@ -33,11 +33,16 @@ namespace Store
         /// </summary>
         public void viewCart()
         {
+            int sum = 0;
             Console.WriteLine("\nItems in cart: \n");
-            foreach(KeyValuePair<String,int> s in cart)
+            foreach (KeyValuePair<Product, int> s in cart)
             {
-                Console.WriteLine("{1} {0}", s.Key, s.Value);
+                Console.WriteLine("{1} {0} = ${2}", s.Key.ProductName, s.Value, s.Key.ProductPrice * s.Value);
+                sum = sum + s.Key.ProductPrice * s.Value;
             }
+
+            Console.WriteLine($"\nThe total cost of your cart is ${sum}\n");
+
         }
 
         /// <summary>
@@ -59,13 +64,13 @@ namespace Store
             }
 
             //Finds the price of the products and adds the total
-            foreach (KeyValuePair<string,int> product in cart)
+            /*foreach (KeyValuePair<string,int> product in cart)
             {
                 int findPrice = productPrices[product.Key];
                 int quantityTotal = findPrice * product.Value;
                 sum = sum + quantityTotal;
 
-            }
+            }*/
             Console.WriteLine($"\nThe total cost of your cart is ${sum}");
         }
 
@@ -77,10 +82,10 @@ namespace Store
         public void displayOrderHistory()
         {
             Console.WriteLine("\nHere is your Order History: \n");
-            foreach (KeyValuePair<String, int> s in cart)
+            /*foreach (KeyValuePair<String, int> s in cart)
             {
                 Console.WriteLine("{1} {0}", s.Key, s.Value);
-            }
+            }*/
         }
 
     }
