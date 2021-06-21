@@ -19,7 +19,11 @@ namespace Store
         private string passwordCreate;
         public int cID { get; set; }
 
-
+        /// <summary>
+        /// 
+        /// Creates a menu to log in or register
+        /// 
+        /// </summary>
         public void menuOptions()
         {
             Console.WriteLine("Please Choose an Number for an Option\n");
@@ -51,6 +55,11 @@ namespace Store
 
         }
 
+        /// <summary>
+        /// 
+        /// Asks the user to sign in to their username and password
+        /// 
+        /// </summary>
         public void signIn()
         {
             StoreDBContext.Customer customer = new StoreDBContext.Customer();
@@ -61,6 +70,7 @@ namespace Store
             Console.WriteLine("\nEnter your username:\n");
             usernameSignIn = Console.ReadLine();
 
+            //Checks if the username exists
             userNameAttempt = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
 
             while (userNameAttempt == null)
@@ -71,18 +81,18 @@ namespace Store
                 userNameAttempt = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
             }
 
-
+            //Checks if the password exists
             Console.WriteLine("\nEnter your password:\n");
             passwordSignIn = Console.ReadLine();
 
-            passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();
+            passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn && x.Username == usernameSignIn).FirstOrDefault();
 
             while (passwordAttempt == null)
             {
                 Console.WriteLine("\nPassword was not found. Please try again\n");
                 Console.WriteLine("Enter your password:\n");
                 passwordSignIn = Console.ReadLine();
-                passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();
+                passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn && x.Username == usernameSignIn).FirstOrDefault();
             }
 
             customer = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
@@ -126,7 +136,7 @@ namespace Store
             Console.WriteLine("\nCreate a password\n");
             passwordCreate = Console.ReadLine();
 
-            
+            //Adds the new Customer Account to the database
             customer.FirstName = fname;
             customer.LastName = lname;
             customer.Username = usernameCreate;

@@ -17,6 +17,13 @@ namespace Store
 
         string locationChoice;
 
+        /// <summary>
+        /// 
+        /// Creates a shopping menu to pick a store location, view cart, check out,
+        /// view order history, view location history or log out
+        /// 
+        /// </summary>
+        /// <param name="customerID">the id of the Customer who is logged in</param>
         public void shoppingMenu(int customerID)
         {
             int userChoice;
@@ -91,6 +98,12 @@ namespace Store
             }
         }
 
+        /// <summary>
+        /// 
+        /// Displays the order history of the store that the user picked
+        /// 
+        /// </summary>
+        /// <param name="location">Name of location that the user picked</param>
         private void locationHistory(string location)
         {
             var locationName = context.Locations.Where(x => x.LocationName == location).FirstOrDefault();
@@ -163,6 +176,12 @@ namespace Store
 
         }
 
+        /// <summary>
+        /// 
+        /// Displays the order history of the customer
+        /// 
+        /// </summary>
+        /// <param name="customerID">ID of the Customer who is logged in</param>
         private void orderHistory(int customerID)
         {
             var customer = context.Customers.Where(x => x.CustomerId == customerID).FirstOrDefault();
@@ -222,7 +241,6 @@ namespace Store
 
             Console.WriteLine($"\nOrder history of {customer.FirstName} {customer.LastName}\n");
             var orderHistory = orderLocationJoin.Where(x => x.CustomerID == customer.CustomerId).FirstOrDefault();
-            Console.WriteLine("timestamp: " + orderHistory.Time);
             var orderlist = orderLocationJoin.Where(x => x.CustomerID == customer.CustomerId).ToList();
 
             Console.WriteLine("\nOrderID      Product     Time Ordered        Quantity        Location\n");
@@ -240,6 +258,12 @@ namespace Store
 
         }
 
+        /// <summary>
+        /// 
+        /// Clears the cart
+        /// 
+        /// </summary>
+        /// <param name="customerID">ID of the Customer who is logged in</param>
         private void checkOut(int customerID)
         {
 
@@ -248,6 +272,13 @@ namespace Store
             Console.WriteLine($"\nYou have checked out\n");
         }
 
+        /// <summary>
+        /// 
+        /// Stores the name of the store the user picked in a variable and
+        /// then list the products of the store
+        /// 
+        /// </summary>
+        /// <param name="customerID">ID of the Customer who is logged in</param>
         public void pickShopping(int customerID)
         {
             string pickStore;
@@ -257,6 +288,12 @@ namespace Store
 
         }
 
+        /// <summary>
+        /// 
+        /// Displays a list of stores and asks the user to input their choice
+        /// 
+        /// </summary>
+        /// <returns>The name of the store the user picked</returns>
         public string getStoreName()
         {
             StoreDBContext.Location currentLocation;
@@ -295,6 +332,14 @@ namespace Store
 
         }
 
+        /// <summary>
+        /// 
+        /// Displays the product of the selected store and asks the user
+        /// to input their choices
+        /// 
+        /// </summary>
+        /// <param name="location">Name of location that user picked</param>
+        /// <param name="customerID">ID of the Customer who is logged in</param>
         public void listProducts(string location, int customerID)
         {
             StoreDBContext.Inventory inventory = new StoreDBContext.Inventory();
@@ -457,7 +502,15 @@ namespace Store
         }
 
 
-
+        /// <summary>
+        /// 
+        /// Decreases the quantity in a store's inventory by the amount
+        /// placed in the user's cart
+        /// 
+        /// </summary>
+        /// <param name="location">Name of the location that the user selected</param>
+        /// <param name="productID">ID of the product the user placed in their cart</param>
+        /// <param name="quantity">Amount of the product the user placed in their cart</param>
         public void decrement(string location, int productID, int quantity)
         {
             var joinInvenLocation = (

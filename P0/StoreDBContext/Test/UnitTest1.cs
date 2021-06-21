@@ -1,18 +1,13 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace StoreTest
+namespace Test
 {
     [TestClass]
     public class UnitTest1
     {
-        
-
         [TestMethod]
-        public void getStoreNameTest()
+        public void TestMethod1()
         {
-            
-
         }
     }
 }

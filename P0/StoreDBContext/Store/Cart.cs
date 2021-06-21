@@ -53,21 +53,6 @@ namespace Store
 
         }
 
-        public Product getProduct(Product product)
-        {
-            Product prod = new Product();
-            foreach(Product p in cart.Keys)
-            {
-                if (cart.Keys.Contains(p))
-                {
-                    prod = p;
-                    return prod;
-                }
-            }
-            return prod;
-
-        }
-
         /// <summary>
         /// 
         /// Clears the cart
@@ -78,30 +63,6 @@ namespace Store
             cart.Clear();
         }
 
-        /// <summary>
-        /// 
-        /// Displays the user's order history
-        /// 
-        /// </summary>
-        public void displayOrderHistory()
-        {
-            var orderFull = (
-                from details in context.OrderDetails
-                join order in context.StoreOrders
-                on details.OrderId equals order.OrderId
-                select new
-                {
-                    OrderId = details.OrderId,
-                    ProductID = details.ProductId,
-                    Quantity = details.Quantity,
-                    Time = order.OrderTime,
-                    CustomerID = order.CustomerId,
-                    LocationID = order.LocationId
-                }
-                );
-
-
-        }
 
     }
 }
