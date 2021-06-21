@@ -19,10 +19,8 @@ namespace Store
         private string passwordCreate;
 
 
-        public bool menuOptions()
+        public void menuOptions()
         {
-            bool loggedIn = false;
-
             Console.WriteLine("Please Choose an Number for an Option\n");
             Console.WriteLine("1.Sign in\n2.Register\n3.Exit\n");
             signInChoice = Convert.ToInt32(Console.ReadLine());
@@ -40,7 +38,7 @@ namespace Store
             }
             else if (signInChoice == 3)
             {
-                loggedIn = true;
+                
             }
             else
             {
@@ -48,7 +46,6 @@ namespace Store
                 menuOptions();
             }
 
-            return loggedIn;
 
         }
 
@@ -72,7 +69,7 @@ namespace Store
             }
 
 
-            Console.WriteLine("Enter your password:\n");
+            Console.WriteLine("\nEnter your password:\n");
             passwordSignIn = Console.ReadLine();
 
             passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();

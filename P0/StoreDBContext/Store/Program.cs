@@ -12,24 +12,23 @@ namespace Store
             LocationName locationName = new LocationName();
             AvailableProducts productName = new AvailableProducts();
             Cart cart = new Cart();
-            bool userLoggedIn = false;
             string locationChoice;
             string productChoice;
             int quantityChoice;
 
+
+
             Console.WriteLine("Welcome to Best Buy! Please make an account\n");
-            userLoggedIn = account.menuOptions();
+            account.menuOptions();
             Console.WriteLine("\n");
             locationChoice = locationName.getStoreName();
-            Console.WriteLine(locationChoice);
 
-            while(userLoggedIn == true)
-            {
-                
-            }
-           /*
-            Console.WriteLine("\n");
-            locationChoice = locationName.getStoreName();*/
+            locationName.listProducts(locationChoice);
+
+
+            /*
+             Console.WriteLine("\n");
+             locationChoice = locationName.getStoreName();*/
 
             /*Console.WriteLine("\nPlease Choose a Product\n");
             productName.getAvailableProducts();
