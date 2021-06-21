@@ -17,6 +17,7 @@ namespace Store
         private string passwordSignIn;
         private string usernameCreate;
         private string passwordCreate;
+        public int cID { get; set; }
 
 
         public void menuOptions()
@@ -36,9 +37,10 @@ namespace Store
                 createAccount();
                 menuOptions();
             }
+
             else if (signInChoice == 3)
             {
-                
+                Environment.Exit(0);
             }
             else
             {
@@ -51,11 +53,12 @@ namespace Store
 
         public void signIn()
         {
+            StoreDBContext.Customer customer = new StoreDBContext.Customer();
             StoreDBContext.Customer userNameAttempt;
             StoreDBContext.Customer passwordAttempt;
 
 
-            Console.WriteLine("Enter your username:\n");
+            Console.WriteLine("\nEnter your username:\n");
             usernameSignIn = Console.ReadLine();
 
             userNameAttempt = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
@@ -82,7 +85,10 @@ namespace Store
                 passwordAttempt = context.Customers.Where(x => x.Password == passwordSignIn).FirstOrDefault();
             }
 
+            customer = context.Customers.Where(x => x.Username == usernameSignIn).FirstOrDefault();
 
+            
+            cID = customer.CustomerId;
         }
 
         /// <summary>
@@ -94,7 +100,7 @@ namespace Store
 
         public void createAccount()
         {
-
+            StoreDBContext.Customer customer = new StoreDBContext.Customer();
             //Asks the user for CustomerID and tries to match
             //first and last name with it
 
@@ -110,20 +116,27 @@ namespace Store
             //Asks the user to create a username and password and saves it in a dictionary
             Console.WriteLine("\nCreate a username\n");
             usernameCreate = Console.ReadLine();
+            var nameCheck = context.Customers.Where(x => x.Username == usernameCreate).FirstOrDefault();
+            if (nameCheck != null)
+            {
+                Console.WriteLine("\nThat username already exists. Please try again\n");
+                createAccount();
+            }
 
             Console.WriteLine("\nCreate a password\n");
             passwordCreate = Console.ReadLine();
 
-            Customer c = new Customer();
-            c.FirstName = fname;
-            c.LastName = lname;
-            c.Username = usernameCreate;
-            c.Password = passwordCreate;
+            
+            customer.FirstName = fname;
+            customer.LastName = lname;
+            customer.Username = usernameCreate;
+            customer.Password = passwordCreate;
 
-            context.Customers.Update(c);
+            context.Customers.Add(customer);
             context.SaveChanges();
 
-            Console.WriteLine("Your account has been created\n");
+            Console.WriteLine("\nYour account has been created\n");
+            Console.WriteLine($"Your customer id is {customer.CustomerId}\n");
 
 
         }

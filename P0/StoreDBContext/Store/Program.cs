@@ -15,15 +15,15 @@ namespace Store
             string locationChoice;
             string productChoice;
             int quantityChoice;
+            int customerID;
 
 
 
             Console.WriteLine("Welcome to Best Buy! Please make an account\n");
             account.menuOptions();
-            Console.WriteLine("\n");
-            locationChoice = locationName.getStoreName();
+            customerID = account.cID;
 
-            locationName.listProducts(locationChoice);
+            locationName.shoppingMenu(customerID);
 
 
             /*
