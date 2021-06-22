@@ -14,6 +14,7 @@ namespace Store
         private Cart cart = new Cart();
         private DateTime timestamp;
         private int orderID;
+        private int cID;
 
         string locationChoice;
 
@@ -88,6 +89,9 @@ namespace Store
                 else if (userChoice == 6)
                 {
                     account.menuOptions();
+                    cID = account.cID;
+                    Console.WriteLine("customer id: " + cID);
+                    
                 }
 
                 else
@@ -161,7 +165,7 @@ namespace Store
             var orderHistory = locationFull.Where(x => x.LocationName == location).FirstOrDefault();
             var orderlist = locationFull.Where(x => x.LocationName == location).ToList();
 
-            Console.WriteLine("\nOrderID      Product     Time Ordered        Quantity        Location\n");
+            Console.WriteLine("\nOrderID      Product     Customer      Time Ordered        Quantity\n");
             foreach (var s in orderlist)
             {
                 int order = s.OrderId;
@@ -185,6 +189,7 @@ namespace Store
         private void orderHistory(int customerID)
         {
             var customer = context.Customers.Where(x => x.CustomerId == customerID).FirstOrDefault();
+            Console.WriteLine("Customer id: " + customer.CustomerId);
 
             var orderJoin = (
                 from details in context.OrderDetails
